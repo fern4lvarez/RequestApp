@@ -1,0 +1,11 @@
+<h1>Results</h1>
+<p><%= @uid %></p>
+<p><%= @pub0 %></p>
+<p><%= @page %></p>
+<p><%= @params_api_string %></p>
+<p><%= @params_api_string_plus_key %></p>
+<p><%= @hashstring %></p>
+<p><%= @resp %></p>
+<p><%= @resp.message %></p>
+<p><%= @body %></p>
+<p><%= @ok %></p>

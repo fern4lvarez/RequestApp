@@ -1,0 +1,37 @@
+<div id = "response_ok">
+	<% if @ok == true %>
+		<img src="<%= asset_path 'ok.png' %>" alt="Response is real"  />
+	<% else %>
+		<img src="<%= asset_path 'no_ok.png' %>" alt="Response may not be real" />
+	<% end %>
+</div>
+
+<% unless @message=='Bad Request' %>
+	<% if @decoded_body.has_key?('offers') %>
+		<fieldset id = "list_results">
+			<% @decoded_body['offers'].each do |offer| %>
+					<div class="offer">
+						<div class="thumbnail">
+							<% imagesrc = offer['thumbnail']['lowres'] %>
+							<img src="<%= imagesrc %>" />
+						</div>
+						<div class="title">
+							<b><%= offer['title'] %></b>
+						</div>
+						<div class="payout">
+							Payout: <%= offer['payout'] %>
+						</div>
+					</div>
+			<% end %>
+		</fieldset>
+	<% else %>
+		<div class="no_offers">
+			No offers
+		</div>
+	<% end %>
+<% else %>
+	<div class="dialog">
+    <h2>Invalid or missing mandatory request parameters.</h2>
+    <p>Come back and try again.</p>
+  </div>
+<% end %>
