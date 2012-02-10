@@ -10,7 +10,7 @@ class RequestController < ApplicationController
 			flash[:error] = "User ID cannot be void"
 			redirect_to :action =>'index' and return
 		elsif (!params[:page].blank? && params[:page].to_i > 10)
-			flash[:error] = "Page must be less than 10"
+			flash[:error] = "Page must be a number or less than 10"
 			redirect_to :action => 'index' and return
 		elsif params[:page].blank?
 			@page = '1'
