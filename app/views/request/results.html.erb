@@ -1,37 +1,53 @@
+<!-- We check the response  -->
 <div id = "response_ok">
 	<% if @ok == true %>
+		<!-- It it's true, a green tick is displayed near the logo  -->
 		<img src="<%= asset_path 'ok.png' %>" alt="Response is real"  />
 	<% else %>
+		<!-- It it's false, an error icon is displayed near the logo  -->
 		<img src="<%= asset_path 'no_ok.png' %>" alt="Response may not be real" />
 	<% end %>
 </div>
 
+<fieldset id = "list_results">
+<!-- Response is not a bad request  -->
 <% unless @message=='Bad Request' %>
+	<!-- There are offers to display  -->
 	<% if @decoded_body.has_key?('offers') %>
-		<fieldset id = "list_results">
+			<!-- Each offer from the response is displayed  -->
 			<% @decoded_body['offers'].each do |offer| %>
 					<div class="offer">
 						<div class="thumbnail">
+							<!-- Thumbnail with low resolution  -->
 							<% imagesrc = offer['thumbnail']['lowres'] %>
 							<img src="<%= imagesrc %>" />
 						</div>
 						<div class="title">
+							<!-- Title  -->
 							<b><%= offer['title'] %></b>
 						</div>
 						<div class="payout">
+							<!-- Payout  -->
 							Payout: <%= offer['payout'] %>
 						</div>
 					</div>
 			<% end %>
-		</fieldset>
+	<!-- No offers to display  -->
 	<% else %>
 		<div class="no_offers">
 			No offers
 		</div>
 	<% end %>
+<!-- Response is a bad request  -->
 <% else %>
-	<div class="dialog">
+		<!-- Bad request message is displayed  -->
     <h2>Invalid or missing mandatory request parameters.</h2>
     <p>Come back and try again.</p>
-  </div>
 <% end %>
+
+</fieldset>
+
+<!-- Page footer -->
+<footer>
+<i>Challenge made by Fernando Á. for Sponsorpay. 2012.</i>
+</footer>

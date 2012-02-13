@@ -5,47 +5,28 @@ require 'json'
 class RequestController < ApplicationController
 	@@KEY = "b07a12df7d52e6c118e5d47d3f9e60135b109a1f"
 
+	Integer= /[1-9]/
+
+	#With this method we validate the input parameters
 	def check_params
+		#User ID must introduced
 		if params[:uid].blank?
 			flash[:error] = "User ID cannot be void"
 			redirect_to :action =>'index' and return
-		elsif (!params[:page].blank? &&  params[:page].to_i > 10)
-			flash[:error] = "Page must be a number or less than 10"
+		#Page must be a number
+		elsif (!params[:page].blank? && !(Integer === params[:page]))
+			flash[:error] = "Page must be a number"
 			redirect_to :action => 'index' and return
+		#If page is empty, we set it to 1
 		elsif params[:page].blank?
 			@page = '1'
 			@uid = params[:uid]
 		  @pub0 = params[:pub0]
+		#Normal assignments
 		else
 			@uid = params[:uid]
 		  @pub0 = params[:pub0]
-		  @page = params[:page]
-		end
-	end
-
-	def render_error
-		respond_to do |format|
-		  format.html { render :file => "#{Rails.root}/public/"+@type_error+".html", :status => :not_found }
-		end
-	end
-
-	def check_error
-		case @resp.message
-			when 'Bad Request' then
-				@type_error = "400"
-				render_error
-			when 'Unauthorized' then
-				@type_error = "401"
-				render_error
-			when 'Not found' then
-				@type_error = "404"
-				render_error
-			when 'Internal Server Error' then
-				@type_error = "500"
-				render_error
-			when 'Bad Gateway' then
-				@type_error = "502"
-				render_error
+		  @page = params[:page].to_i
 		end
 	end
 
@@ -53,7 +34,6 @@ class RequestController < ApplicationController
   def results
 
 		check_params
-
 
 		# a hash holding the relevant keys and values
 		params_api_hash = {	'appid' => '157',

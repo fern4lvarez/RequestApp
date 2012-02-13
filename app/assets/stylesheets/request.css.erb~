@@ -1,51 +1,91 @@
+/*Index, Results*/
 body
 {
-	/*background-color: #DDD;*/
 	background: #FFF url(<%= asset_path 'logo.png' %>) no-repeat top left;
 	padding-top: 65px;
+	font-family: Arial, "MS Trebuchet", sans-serif;
+
 }
 
-h1{
+/*Index, Results*/
+h1,h2,p{
 	text-align: center;
 
 }
 
+/*Index, Results*/
+footer {
+	padding-top: 30px;
+	text-color: #ccc;
+	font-size: 11px;
+}
+
+/*Flash messages -> Index */
 #flash{
 		background-color: red;
 		text-align: center;
-
 		width:378px;
 		border:1px solid;
 		-moz-border-radius: 3px 3px 3px 3px;
    	-webkit-border-radius: 3px 3px 3px 3px;
-
-
+		-o-border-radius: 3px 3px 3px 3px;
 }
 
-
+/*Input parameters -> Index */
 #req_params{
 		background-color: #DDD;
-		border:1px solid;
+		border:1px solid #ccc;
     width:350px;
-
 		-moz-border-radius: 10px 10px 10px 10px;
    	-webkit-border-radius: 10px 10px 10px 10px;
+		-o-border-radius: 10px 10px 10px 10px;
 }
 
+/* Legend fieldset -> Index */
 #req_params legend{
     font-size:14px;
 }
 
+/* Index */
 #req_params ul{
     list-style:none;
 }
 
+/* Index */
 #req_params ul li{
     padding-bottom:5px;
 }
 
+/* Index */
 #req_params ul li label{
     width:60px;
     float:left;
     text-align:left;
+}
+
+/* Green tick position -> Results */
+#response_ok{
+	padding-left: 270px;
+	margin-top: -60px;
+}
+
+/* Results */
+#list_results{
+		background-color: #DDD;
+		border:1px solid #ccc;
+    width:294px;
+		text-align: center;
+		-moz-border-radius: 10px 10px 10px 10px;
+   	-webkit-border-radius: 10px 10px 10px 10px;
+		-o-border-radius: 10px 10px 10px 10px;
+}
+
+/* Results */
+.offer{
+	padding-bottom: 30px;
+}
+
+/* Results */
+.dialog.p{
+	text-align: center;
 }

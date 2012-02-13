@@ -1,4 +1,5 @@
- <% [:info, :error].each do |key| %>
+<!--This part will show possible errors or flash messages over the input box-->
+<% [:info, :error].each do |key| %>
    <% if flash[key] %>
    <div class="<%= key %>" id="flash">
      <%= flash[key] %>
@@ -6,27 +7,35 @@
    <% end %>
  <% end %>
 
+<!--The input of our program -->
 <fieldset id = "req_params">
 	<legend>Enter your request parameters</legend>
-
-	<%= form_tag ({:controller => "request", :action => "results"}, :method => "get") do %>
+	<%= form_tag({:controller => "request", :action => "results"}, :method => "get") do %>
 		<ul>
 			<li>
+				<!-- User ID -->
 				<%= label_tag(:uid, "uid:") %>
 				<%= text_field_tag(:uid) %>
 			</li>
 			<li>
+				<!-- Custom parameter -->
 				<%= label_tag(:pub0, "pub0:") %>
 				<%= text_field_tag(:pub0) %>
 			</li>
 			<li>
+				<!-- Page number -->
 				<%= label_tag(:page, "page:") %>
 				<%= text_field_tag(:page) %>
 			</li>
 		</ul>
+		<!-- Submit button -->
 		<p align="center">
 			<%= submit_tag "Go!" %>
 		</p>
 	<% end %>
 
 </fieldset>
+
+<footer>
+<i>Challenge made by Fernando Á. for Sponsorpay. 2012.</i>
+</footer>

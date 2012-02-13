@@ -5,57 +5,38 @@ require 'json'
 class RequestController < ApplicationController
 	@@KEY = "b07a12df7d52e6c118e5d47d3f9e60135b109a1f"
 
+	Integer= /[1-9]/
+
+	#With this method we validate the input parameters
 	def check_params
+		#User ID must introduced
 		if params[:uid].blank?
 			flash[:error] = "User ID cannot be void"
 			redirect_to :action =>'index' and return
-		elsif (!params[:page].blank? && params[:page].to_i > 10)
-			flash[:error] = "Page must be a number or less than 10"
+		#Page must be a number
+		elsif (!params[:page].blank? && !(Integer === params[:page]))
+			flash[:error] = "Page must be a number"
 			redirect_to :action => 'index' and return
+		#If page is empty, we set it to 1
 		elsif params[:page].blank?
 			@page = '1'
 			@uid = params[:uid]
 		  @pub0 = params[:pub0]
+		#Normal assignments
 		else
 			@uid = params[:uid]
 		  @pub0 = params[:pub0]
-		  @page = params[:page]
-		end
-	end
-
-	def render_error
-		respond_to do |format|
-		  format.html { render :file => "#{Rails.root}/public/"+@type_error+".html", :status => :not_found }
-		end
-	end
-
-	def check_error
-		case @resp.message
-			when 'Bad Request' then
-				@type_error = "400"
-				render_error
-			when 'Unauthorized' then
-				@type_error = "401"
-				render_error
-			when 'Not found' then
-				@type_error = "404"
-				render_error
-			when 'Internal Server Error' then
-				@type_error = "500"
-				render_error
-			when 'Bad Gateway' then
-				@type_error = "502"
-				render_error
+		  @page = params[:page].to_i
 		end
 	end
 
 
   def results
 
+		#Parameters validation
 		check_params
 
-
-		# a hash holding the relevant keys and values
+		#This hash contains all request parameters
 		params_api_hash = {	'appid' => '157',
 				    	'ip' => '109.235.143.113',
 				    	'locale' => 'de',
@@ -65,47 +46,49 @@ class RequestController < ApplicationController
 							'device_id' => '2b6f0cc904d137be2e1730235f5664094b831186',
 							'offer_types' => '112'}
 
+		#pub0 is an optional paremeter, so we just add it if user introduces it
 		if !params[:pub0].blank?
 			params_api_hash['pub0'] = @pub0
 		end
 
-		# set up an array so the params can be sorted alphatetically
+		#This list will contain all the parameters alphabetically sorted
 		params_api_list = []
 
+		#Each parameter is introduced
 		params_api_hash.each do|key,value|
 			params_api_list << "#{key}=#{value}"
 		end
-		# sort alphabetically
 
+		#The list is sorted
 		params_api_list.sort!
 
+		#We concatenate all the values of the list separated by & and we set them to lowercase
 		@params_api_string = params_api_list.join('&').downcase
 
+		#The API Key comes at the end of this string
 		@params_api_string_plus_key = @params_api_string + "&" + @@KEY
 
+		#We hash the resulting string using SHA1
 		@hashstring = (Digest::SHA1.hexdigest @params_api_string_plus_key).downcase
 
+		#It comes at the end of the parameters string
 		@params_api_string += "&hashkey=#{@hashstring}"
 
+		#The URL request is made using Net:HTTP
 		@resp = Net::HTTP.get_response("api.sponsorpay.com", "/feed/v1/offers.json?#{@params_api_string}")
 
-		#check_error
-		#if @resp.message == "Bad Request"
-			#flash[:error] = "Invalid or missing request parameters"
-			#redirect_to :action =>'index' and return
-		#end
-
+		#This variable contains the body of the response
 		@body = @resp.body
 
+		#And this one the message of the response
 		@message = @resp.message
 
+		#We check that it's a real response
 		@resp_sha1 = Digest::SHA1.hexdigest(@resp.body + @@KEY)
-
     @ok = @resp["X-Sponsorpay-Response-Signature"] == @resp_sha1
 
+		#Using JSON the response body is decoded in order to use it to get the results
 		@decoded_body = ActiveSupport::JSON.decode(@body)
-
-    #@offers = @decoded_body["offers"]
 
 	end
 end
