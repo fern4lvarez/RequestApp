@@ -10,6 +10,7 @@ gem 'json'
 
 group :development, :test do
 	gem 'rspec-rails'
+	gem 'webrat'
 	gem 'sqlite3'
 end
 
@@ -21,5 +22,3 @@ group :assets do
 end
 
 gem 'jquery-rails'
-
-gem 'dynamic_form'

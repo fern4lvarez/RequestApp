@@ -10,7 +10,8 @@
 <!--The input of our program -->
 <fieldset id = "req_params">
 	<legend>Enter your request parameters</legend>
-	<%= form_tag({:controller => "request", :action => "results"}, :method => "get") do %>
+	<!-- <%= form_tag({:controller => "request", :action => "results"}, :method => "get") do %> ->
+
 		<ul>
 			<li>
 				<!-- User ID -->
@@ -36,6 +37,7 @@
 
 </fieldset>
 
+<!-- Page footer -->
 <footer>
 <i>Challenge made by Fernando Á. for Sponsorpay. 2012.</i>
 </footer>

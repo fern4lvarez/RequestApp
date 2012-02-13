@@ -3,7 +3,13 @@ require 'digest/sha1'
 require 'json'
 
 class RequestController < ApplicationController
+
 	@@KEY = "b07a12df7d52e6c118e5d47d3f9e60135b109a1f"
+
+
+	def empty_key?
+			@@KEY == ""
+	end
 
 	Integer= /[1-9]/
 
@@ -30,6 +36,8 @@ class RequestController < ApplicationController
 		end
 	end
 
+	def index
+	end
 
   def results
 
@@ -69,7 +77,7 @@ class RequestController < ApplicationController
 		@params_api_string_plus_key = @params_api_string + "&" + @@KEY
 
 		#We hash the resulting string using SHA1
-		@hashstring = (Digest::SHA1.hexdigest @params_api_string_plus_key).downcase
+		@hashstring = (Digest::SHA1.hexdigest 			@params_api_string_plus_key).downcase
 
 		#It comes at the end of the parameters string
 		@params_api_string += "&hashkey=#{@hashstring}"
