@@ -19,6 +19,7 @@ To try this application you can download the whole repository and execute it by 
 == What's inside
 
 We've used Ruby on Rails to create this application. There is only one controller, called Request, and two views, index and results, asociated to it. There's no models used in development.
+We don't make use of any model, but we chose PostgreSQL in production environment in order not to create conflicts with Heroku, which is not SQLite3-friendly.
 
 == Eyecandy
 
