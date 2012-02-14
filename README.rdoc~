@@ -24,7 +24,7 @@ We've used Ruby on Rails to create this application. There is only one controlle
 
 The views make use of a stylesheet located in the assets folder. We've used basic CSS to implement it, making some features compatible with the different availables browsers.
 
-== How To Use It
+== How To Use It 
 
 Using RequestApp is really easy!
 At the first screen you have to introduce three parameters:
@@ -33,10 +33,9 @@ At the first screen you have to introduce three parameters:
 * Custom parameter (It's optional so you can let it empty)
 * Page number (It must be a number)
 
-If response is OK, results will be displayed.
-If response is No Content, a message saying there's no results is displayed.
-If response is Bad Request, a message will tell it.
-
-If response was real, a green tick will appear near the logo. If it was not real, a red cross error will be there.
+Then you will get the results, in case that they exist. If not, a message will be displayed saying there's no results to show.
+If the response of the request was real, a green tick will appear near the logo. If it was not real, a red cross error will be there.
 
 == Testing
+
+
